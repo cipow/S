@@ -25,8 +25,17 @@ $router->group(['prefix' => '/api/owners'], function($router) {
   $router->put('/geo', 'OwnerController@geolocation');
 
   // KAMAR OWNER ROUTING
-  $router->get('/kamars', 'OwnerController@listKamar');
-  $router->post('/kamars', 'OwnerController@createKamar');
-  $router->put('/kamars/{id}', 'OwnerController@updateKamar');
-  $router->delete('/kamars/{id}', 'OwnerController@deleteKamar');
+  $router->get('/kamars', 'KamarController@listKamar');
+  $router->post('/kamars', 'KamarController@createKamar');
+  $router->get('/kamars/{id}', 'KamarController@getKamar');
+  $router->put('/kamars/{id}', 'KamarController@updateKamarInfo');
+  $router->post('/kamars/cover/{id}', 'KamarController@updateKamarCover');
+  $router->put('/kamars/penginap/{id}', 'KamarController@updateKamarPenginap');
+  $router->delete('/kamars/{id}', 'KamarController@deleteKamar');
+});
+
+$router->group(['prefix' => '/api/kamars'], function($router) {
+  $router->get('/', 'KamarController@getAll');
+  $router->post('/{id}', 'KamarController@postPreview');
+  $router->delete('/{id}', 'KamarController@deletePreview');
 });

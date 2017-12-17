@@ -10,14 +10,10 @@ use App\Kamar;
 class OwnerController extends Controller
 {
     public function __construct() {
-      $this->middleware('auth', ['only' => [
-          'updateProfil',
-          'uploadFoto',
-          'geolocation',
-          'listKamar',
-          'createKamar',
-          'updateKamar',
-          'deleteKamar'
+      $this->middleware('auth', ['except' => [
+          'index',
+          'authentication',
+          'create'
         ]]);
     }
 
@@ -106,52 +102,6 @@ class OwnerController extends Controller
       $username = $this->getUsername($request->header('Authorization'));
       Owner::where('username', $username)->update(['geo'=>$request->geo]);
       return response()->json(['status'=>'updated']);
-    }
-
-    public function listKamar(Request $request) {
-      $username = $this->getUsername($request->header('Authorization'));
-      $kamars = Owner::where('username', $username)->first();
-      return response()->json(['count'=>$kamars->kamars()->count(),'data'=>$kamars->kamars]);
-    }
-
-    public function createKamar(Request $request) {
-      $username = $this->getUsername($request->header('Authorization'));
-      $destinationPath = 'kamars/cover/';
-      $fileSave = '';
-
-      if($request->hasFile('cover')) {
-        if($request->file('cover')->isValid()) {
-          $file = $request->file('cover');
-          $fileName = $username.'-'.$request->jenis.'.'.$file->getClientOriginalExtension();
-          $file->move($destinationPath, $fileName);
-
-          $fileSave = url('/'.$destinationPath.$fileName);
-        }
-      } else {
-        $fileSave = 'no image';
-      }
-
-      $kamar = new Kamar();
-      $kamar->cover = $fileSave;
-      $kamar->tipe = $request->tipe;
-      $kamar->jenis = $request->jenis;
-      $kamar->harga = $request->harga;
-      $kamar->total = $request->total;
-      $kamar->fasilitas = $request->fasilitas;
-      $kamar->username = $username;
-
-      $user = Owner::where('username', $username)->first();
-      $user->kamars()->save($kamar);
-
-      return response()->json(['status'=>'created']);
-    }
-
-    public function updateKamar(Request $request, $id) {
-
-    }
-
-    public function deleteKamar(Request $request, $id) {
-
     }
 
 }

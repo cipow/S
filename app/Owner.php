@@ -8,7 +8,7 @@ Class Owner extends Model {
 
   protected $table = 'owners';
 
-  protected $hidden = ['password', 'api_token'];
+  protected $hidden = ['username','password', 'api_token'];
 
   public $timestamps = false;
 

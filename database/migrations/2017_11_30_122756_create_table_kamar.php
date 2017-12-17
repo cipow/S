@@ -16,7 +16,7 @@ class CreateTableKamar extends Migration
         Schema::create('kamars', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('tipe',['COWOK','CEWEK','CAMPUR']);
-            $table->string('jenis',50);
+            $table->string('jenis',50)->unique();
             $table->integer('harga');
             $table->text('cover');
             $table->integer('total');

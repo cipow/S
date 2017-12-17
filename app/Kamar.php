@@ -9,7 +9,14 @@ Class Kamar extends Model {
 
   public $timestamps = false;
 
+  protected $hidden = ['username'];
+
   public function owner() {
-    return $this->belongsTo('App\Owner');
+    return $this->belongsTo('App\Owner','username','username');
   }
+
+  public function previews() {
+    return $this->hasMany('App\Preview','kamar_id','id');
+  }
+
 }
