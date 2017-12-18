@@ -17,7 +17,13 @@ class OwnerController extends Controller
         ]]);
     }
 
-    public function index() {
+    public function index(Request $request) {
+      if ($request->header('Authorization')) {
+        $username = $this->getUsername($request->header('Authorization'));
+        $owner = Owner::where('username', $username)->first();
+        return response()->json($owner);
+      }
+
       $owners = Owner::all();
       return response()->json(['count'=>$owners->count(),'data'=>$owners]);
     }

@@ -56,6 +56,41 @@
       <div class="col-sm-2"></div>
     </div>
 
+    <!-- OWNERS -->
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading"><b>OWNERS</b></div>
+          <div class="panel-body">
+            <p>dapatkan informasi pemilik kos</p>
+          </div>
+
+          <!-- Table -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>METHOD</th>
+                <th>ROUTE</th>
+                <th>HEADER</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GET</td>
+                <td>/api/owners</td>
+                <td>Authorization = API_TOKEN</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
     <!-- CREATE OWNER -->
     <div class="row">
       <div class="col-sm-2"></div>
