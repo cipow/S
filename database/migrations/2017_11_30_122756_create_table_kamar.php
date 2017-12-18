@@ -19,8 +19,7 @@ class CreateTableKamar extends Migration
             $table->string('jenis',50)->unique();
             $table->integer('harga');
             $table->text('cover');
-            $table->integer('total');
-            $table->integer('penginap')->default(0);
+            $table->integer('jumlah');
             $table->text('fasilitas');
             $table->string('username',32);
             //$table->timestamps();

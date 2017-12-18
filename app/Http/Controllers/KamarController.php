@@ -17,8 +17,21 @@ class KamarController extends Controller
   }
 
   public function getAll(Request $request) {
-    $kamars = Kamar::all();
+    $harga = 100000000;
+    if ($request->has('harga')) {
+      $harga = $request->harga;
+    }
 
+    if ($request->has('sisa')) {
+      if ($request->sisa == 1) {
+        $kamars = Kamar::where('harga','<=',$harga)
+                  ->where('jumlah','>',0);
+      }
+    } else {
+      $kamars = Kamar::where('harga','<=',$harga);
+    }
+
+    $kamars = $kamars->get();
     foreach ($kamars as $kamar) {
       $kamar->owner = Kamar::find($kamar->id)->owner;
       $kamar->gambar = Kamar::find($kamar->id)->previews;
@@ -88,6 +101,7 @@ class KamarController extends Controller
     if(empty($result)) {
       return response()->json(['status'=>'not found']);
     }
+    $result->gambar = Kamar::find($id)->previews;
 
     return response()->json($result);
   }
@@ -114,7 +128,7 @@ class KamarController extends Controller
     $kamar->tipe = $request->tipe;
     $kamar->jenis = $request->jenis;
     $kamar->harga = $request->harga;
-    $kamar->total = $request->total;
+    $kamar->jumlah = $request->jumlah;
     $kamar->fasilitas = $request->fasilitas;
 
     $user = Owner::where('username', $username)->first();
@@ -139,9 +153,6 @@ class KamarController extends Controller
     $result->jenis = $request->jenis;
     $result->harga = $request->harga;
     $result->fasilitas = $request->fasilitas;
-    if($request->total >= $result->penginap) {
-      $result->total = $request->total;
-    }
     $result->save();
 
     return response()->json(['status'=>'updated']);
@@ -181,7 +192,7 @@ class KamarController extends Controller
 
   }
 
-  public function updateKamarPenginap(Request $request, $id) {
+  public function updateKamarJumlah(Request $request, $id) {
     $username = $this->getUsername($request->header('Authorization'));
 
     $result = Kamar::where([
@@ -193,9 +204,7 @@ class KamarController extends Controller
       return response()->json(['status'=>'not found']);
     }
 
-    if ($request->penginap <= $result->total) {
-      $result->penginap = $request->penginap;
-    }
+    $result->jumlah = $request->jumlah;
     $result->save();
 
     return response()->json(['status'=>'updated']);

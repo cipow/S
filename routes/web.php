@@ -30,7 +30,7 @@ $router->group(['prefix' => '/api/owners'], function($router) {
   $router->get('/kamars/{id}', 'KamarController@getKamar');
   $router->put('/kamars/{id}', 'KamarController@updateKamarInfo');
   $router->post('/kamars/cover/{id}', 'KamarController@updateKamarCover');
-  $router->put('/kamars/penginap/{id}', 'KamarController@updateKamarPenginap');
+  $router->put('/kamars/jumlah/{id}', 'KamarController@updateKamarJumlah');
   $router->delete('/kamars/{id}', 'KamarController@deleteKamar');
 });
 
