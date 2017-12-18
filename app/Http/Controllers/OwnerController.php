@@ -49,6 +49,7 @@ class OwnerController extends Controller
       $owner->telepon = $request->telepon;
       $owner->nama = $request->nama;
       $owner->alamat = $request->alamat;
+      $owner->api_token = base64_encode(str_random(40));
       $owner->save();
 
       return response()->json(['status'=>'created']);
